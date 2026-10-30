@@ -1,10 +1,11 @@
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect, useLayoutEffect, useRef } from "react";
 import { createPortal } from "react-dom";
 import { Link, useLocation, useNavigate } from "react-router-dom";
-import { Menu, X, ChevronDown, MapPin, Users, SlidersHorizontal, Monitor, FileText, Hotel, Plane, ArrowLeftRight, Compass, Car, CalendarCheck, Layers, Settings2, ArrowRight, Search, Train, Package, LayoutGrid, Clock } from "lucide-react";
+import { Menu, X, ChevronDown, MapPin, Users, SlidersHorizontal, Monitor, FileText, Hotel, Plane, ArrowLeftRight, Compass, Car, CalendarCheck, Layers, Settings2, ArrowRight, Search, Train, Package, LayoutGrid } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { useRegion } from "../context/RegionContext";
 import { FOCUS_DESTINATIONS } from "../data/focusDestinations";
+import gsap from "gsap";
 import axios from "axios";
 
 const PORTAL = process.env.REACT_APP_AGENT_PORTAL_URL;
@@ -29,6 +30,8 @@ export default function Navbar({ forceLight = false }) {
   const [allDests, setAllDests] = useState([]);
   const [gateModal, setGateModal] = useState(null);
   const [recentDests, setRecentDests] = useState(getRecentDests);
+  const [hoveredDest, setHoveredDest] = useState(FOCUS_DESTINATIONS[2]);
+  const destDropRef = useRef(null);
   const ref = useRef(null);
   const location = useLocation();
   const navigate = useNavigate();
@@ -58,6 +61,16 @@ export default function Navbar({ forceLight = false }) {
     }).catch(() => {});
   }, [config.code, config.destinations]);
 
+  useLayoutEffect(() => {
+    if (openDD !== "dest" || !destDropRef.current) return;
+    setHoveredDest(FOCUS_DESTINATIONS[2]);
+    const ctx = gsap.context(() => {
+      gsap.fromTo(destDropRef.current, { opacity: 0, y: -10, scale: 0.97 }, { opacity: 1, y: 0, scale: 1, duration: 0.3, ease: "power2.out" });
+      gsap.fromTo(destDropRef.current.querySelectorAll(".dest-item"), { opacity: 0, y: 6 }, { opacity: 1, y: 0, duration: 0.25, stagger: 0.04, delay: 0.06, ease: "power2.out" });
+    }, destDropRef);
+    return () => ctx.revert();
+  }, [openDD]);
+
   const close = () => { setOpenDD(null); setMobileOpen(false); setDestSearch(""); };
   const trackDest = (name) => { addRecentDest(name); setRecentDests(getRecentDests()); close(); };
   const toggle = (n) => { setOpenDD(openDD === n ? null : n); setDestSearch(""); if (n === "dest") setRecentDests(getRecentDests()); };
@@ -70,6 +83,7 @@ export default function Navbar({ forceLight = false }) {
   const filteredDests = destSearch.trim()
     ? allDests.filter((d) => d.name.toLowerCase().includes(destSearch.toLowerCase())).slice(0, 12)
     : [];
+  const destMatches = FOCUS_DESTINATIONS.filter((d) => d.name.toLowerCase().includes(destSearch.trim().toLowerCase()));
 
   const txtM = isLight ? "text-[#0D1B2A]/60" : "text-white/70";
 
@@ -95,7 +109,97 @@ export default function Navbar({ forceLight = false }) {
         </Link>
 
         <div className="hidden lg:flex items-center gap-1 ml-6">
-          <NavTab label="Destinations" id="dest" />
+          <div className="relative">
+            <NavTab label="Destinations" id="dest" />
+
+            {/* ========= DESTINATIONS MEGA-MENU ========= */}
+            {openDD === "dest" && (
+              <div
+                ref={destDropRef}
+                data-testid="dest-dropdown"
+                className="absolute top-[calc(100%+14px)] left-0 w-[800px] max-w-[88vw] rounded-[1.75rem] bg-white border border-[#0D1B2A]/08 shadow-[0_40px_100px_-28px_rgba(13,27,42,0.35)] overflow-hidden z-50"
+              >
+                <div className="grid grid-cols-[1.05fr_1fr]">
+                  {/* LEFT — search + quick access */}
+                  <div className="p-6">
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#0D1B2A]/40 mb-2.5">Find a Destination</p>
+                    <div className="relative mb-5">
+                      <Search size={14} className="absolute left-3.5 top-1/2 -translate-y-1/2 text-[#0D1B2A]/25" />
+                      <input
+                        data-testid="dest-search"
+                        type="text"
+                        placeholder="Search destinations…"
+                        value={destSearch}
+                        onChange={(e) => setDestSearch(e.target.value)}
+                        className="w-full pl-9 pr-3 py-2.5 rounded-xl bg-[#F8FAFB] border border-[#0D1B2A]/08 text-[13px] text-[#0D1B2A] placeholder:text-[#0D1B2A]/35 focus:outline-none focus:border-[#174358]/30 focus:bg-white transition-all"
+                      />
+                    </div>
+
+                    <p className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#0D1B2A]/40 mb-2">Our Destinations</p>
+                    <div className="space-y-0.5">
+                      {destMatches.length > 0 ? destMatches.map((d) => (
+                        <Link
+                          key={d.slug}
+                          to={`/destination/${d.name}`}
+                          onClick={() => trackDest(d.name)}
+                          onMouseEnter={() => setHoveredDest(d)}
+                          className="dest-item group flex items-center gap-3 px-2.5 py-2 rounded-xl hover:bg-[#F4F1E8] transition-colors duration-200"
+                        >
+                          <span className="w-10 h-10 rounded-full overflow-hidden shrink-0 ring-1 ring-[#0D1B2A]/08">
+                            <img src={d.cardImage} alt={d.name} loading="lazy" className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" />
+                          </span>
+                          <span className="flex-1 min-w-0">
+                            <span className="block text-[13.5px] font-bold text-[#0D1B2A] leading-tight">{d.name}</span>
+                            <span className="block text-[11px] text-[#0D1B2A]/45">{d.region}</span>
+                          </span>
+                          <ArrowRight size={13} className="text-[#0D1B2A]/25 group-hover:text-[#174358] group-hover:translate-x-0.5 transition-all duration-200 shrink-0" />
+                        </Link>
+                      )) : (
+                        <p className="text-[12px] text-[#0D1B2A]/35 px-2.5 py-2">No destinations found.</p>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* RIGHT — featured destination visual */}
+                  <Link
+                    to={`/destination/${hoveredDest.name}`}
+                    onClick={() => trackDest(hoveredDest.name)}
+                    className="relative block overflow-hidden group min-h-[260px]"
+                  >
+                    {FOCUS_DESTINATIONS.map((d) => (
+                      <img
+                        key={d.slug}
+                        src={d.heroImage || d.cardImage}
+                        alt={d.name}
+                        className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-500 ease-out ${hoveredDest.slug === d.slug ? "opacity-100" : "opacity-0"}`}
+                      />
+                    ))}
+                    <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A] via-[#0D1B2A]/15 to-transparent" />
+                    <div className="absolute inset-x-0 bottom-0 p-6">
+                      <p className="text-[10px] font-bold uppercase tracking-[0.25em] text-white/60 mb-1.5">{hoveredDest.region}</p>
+                      <h4 className="font-['DM_Sans'] text-xl font-bold text-white mb-1.5">{hoveredDest.name}</h4>
+                      <p className="text-[12px] text-white/70 leading-snug mb-4 max-w-[220px]">{hoveredDest.tagline}</p>
+                      <span className="inline-flex items-center gap-1.5 text-[12px] font-bold text-white group-hover:gap-2.5 transition-all duration-200">
+                        Explore {hoveredDest.name} <ArrowRight size={13} />
+                      </span>
+                    </div>
+                  </Link>
+                </div>
+
+                {/* FOOTER BAR */}
+                <div className="flex items-center justify-between px-6 py-3.5 border-t border-[#0D1B2A]/06 bg-[#F8FAFB]">
+                  <Link
+                    to="/#explore-destinations"
+                    onClick={(e) => goHash(e, "#explore-destinations")}
+                    className="inline-flex items-center gap-1.5 text-[12px] font-bold text-[#174358] hover:text-[#0D1B2A] transition-colors group"
+                  >
+                    Explore all destinations <ArrowRight size={12} className="group-hover:translate-x-0.5 transition-transform" />
+                  </Link>
+                  <span className="text-[11px] text-[#0D1B2A]/35 font-semibold">{FOCUS_DESTINATIONS.length} signature destinations</span>
+                </div>
+              </div>
+            )}
+          </div>
           <NavTab label="Services" id="svc" />
           <NavTab label="Products" id="prod" />
           {[{ l: "Technology", h: "/technology" }, { l: "Webinars", h: "/webinars" }, { l: "About", h: "/about" }].map((n) => (
@@ -115,71 +219,6 @@ export default function Navbar({ forceLight = false }) {
           {mobileOpen ? <X size={24} /> : <Menu size={24} />}
         </button>
       </div>
-
-      {/* ========= DESTINATIONS DROPDOWN ========= */}
-      {openDD === "dest" && (
-        <div data-testid="dest-dropdown" className="hidden lg:block absolute top-full left-0 right-0 animate-fadeInUp" style={{ animationDuration: "200ms" }}>
-          <div className="bg-white border-t border-[#0D1B2A]/06 shadow-[0_30px_80px_-20px_rgba(13,27,42,0.18)]">
-            <div className="max-w-5xl mx-auto px-12 py-10">
-              <div className="max-w-xl mb-8">
-                <p className="text-[#0D1B2A]/40 text-xs uppercase tracking-[0.15em] font-bold mb-3">Find a Destination</p>
-                <div className="relative">
-                  <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0D1B2A]/20" />
-                  <input data-testid="dest-search" type="text" placeholder="Where do you want to go?" value={destSearch} onChange={(e) => setDestSearch(e.target.value)} autoFocus
-                    className="w-full pl-12 pr-4 py-4 rounded-2xl bg-[#F8FAFB] border border-[#0D1B2A]/08 text-base text-[#0D1B2A] placeholder:text-[#0D1B2A]/25 focus:outline-none focus:border-[#174358]/25 focus:bg-white transition-all" />
-                </div>
-              </div>
-
-              {destSearch.trim() ? (
-                <div>
-                  {filteredDests.length > 0 ? (
-                    <div className="flex flex-wrap gap-3">
-                      {filteredDests.map((d) => (
-                        <Link key={d.name} to={`/destination/${d.name}`} onClick={() => trackDest(d.name)}
-                          className="px-6 py-3 rounded-full text-sm font-semibold text-[#0D1B2A]/70 border border-[#0D1B2A]/10 hover:bg-[#174358] hover:text-white hover:border-[#174358] transition-all duration-200">{d.name}</Link>
-                      ))}
-                    </div>
-                  ) : (
-                    <p className="text-base text-[#0D1B2A]/35">No destinations found for "<span className="text-[#0D1B2A]/60 font-semibold">{destSearch}</span>"</p>
-                  )}
-                </div>
-              ) : (
-                <div>
-                  {recentDests.length > 0 && (
-                    <div className="mb-8">
-                      <p className="text-[#0D1B2A]/40 text-xs uppercase tracking-[0.15em] font-bold mb-4">Recently Searched</p>
-                      <div className="flex flex-wrap gap-2.5">
-                        {recentDests.map((name) => (
-                          <Link key={name} to={name === "Europe" ? "/destination/Europe" : `/destination/${name}`} onClick={() => trackDest(name)}
-                            className="flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-semibold text-[#174358] bg-[#174358]/06 border border-[#174358]/10 hover:bg-[#174358] hover:text-white hover:border-[#174358] transition-all duration-200">
-                            <Clock size={13} className="opacity-50" />{name}
-                          </Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-                  <div>
-                    <p className="text-[#0D1B2A]/40 text-xs uppercase tracking-[0.15em] font-bold mb-4">Our Destinations</p>
-                    <div className="flex flex-wrap gap-3">
-                      {FOCUS_DESTINATIONS.map((d) => (
-                        <Link key={d.name} to={`/destination/${d.name}`} onClick={() => trackDest(d.name)}
-                          className="px-6 py-3 rounded-full text-sm font-semibold text-[#0D1B2A]/70 border border-[#0D1B2A]/10 hover:bg-[#174358] hover:text-white hover:border-[#174358] transition-all duration-200">{d.name}</Link>
-                      ))}
-                    </div>
-                  </div>
-                </div>
-              )}
-
-              <div className="mt-8 pt-7 border-t border-[#0D1B2A]/06">
-                <Link to="/#explore-destinations" onClick={(e) => goHash(e, "#explore-destinations")}
-                  className="inline-flex items-center gap-2.5 text-base font-bold text-[#174358] hover:text-[#0D1B2A] transition-colors group">
-                  <MapPin size={18} /> View All {FOCUS_DESTINATIONS.length} Destinations <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
-                </Link>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* ========= SERVICES DROPDOWN ========= */}
       {openDD === "svc" && (

@@ -40,7 +40,7 @@ export default function Hero() {
     return () => ctx.revert();
   }, []);
 
-  const headline = ["Built", "for", "travel", "businesses", "that", "want", "to", "scale"];
+  const headline = ["Helping", "Travel", "Brands", "Succeed"];
 
   return (
     <section ref={rootRef} id="hero" data-testid="hero-section" className="relative overflow-hidden bg-[#0D1B2A] min-h-screen flex flex-col">
@@ -68,7 +68,7 @@ export default function Hero() {
 
       {/* Hero line — centered in the middle of the screen */}
       <div className="relative z-10 pointer-events-none flex-1 flex flex-col items-center justify-center text-center max-w-5xl mx-auto px-6 pt-20 pb-16">
-        <h1 data-testid="hero-heading" className="font-['DM_Sans'] font-bold tracking-tight text-white leading-[1.12] text-3xl sm:text-4xl md:text-5xl lg:text-6xl">
+        <h1 data-testid="hero-heading" className="font-['DM_Sans'] font-bold tracking-tight text-white leading-[1.15] text-[clamp(1.75rem,6vw,4.75rem)]">
           {headline.map((w, i) => (
             <span key={i} className="inline-block overflow-hidden align-bottom mr-2.5 sm:mr-3 md:mr-4 last:mr-0">
               <span className="hero-word inline-block">{w}</span>
