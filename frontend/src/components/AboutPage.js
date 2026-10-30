@@ -52,7 +52,7 @@ export default function AboutPage() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 py-24 md:py-28 w-full">
           <p data-reveal className="text-[11px] tracking-[0.25em] uppercase font-semibold text-white/40 mb-6 font-['Manrope']">About Hi DMC</p>
           <h1 data-reveal data-testid="about-heading" className="font-['Manrope'] font-bold tracking-tight text-5xl sm:text-6xl md:text-7xl text-white leading-[1.05] mb-7">
-            Technology-Driven.<br /><em className="not-italic text-white/60">Locally Expert.</em>
+            Technology-Driven.<br />Locally Expert.
           </h1>
           <p data-reveal className="text-base md:text-lg text-white/50 max-w-2xl leading-relaxed font-['Manrope']">
             A division of Hi Tours Group, one of Asia's leading travel companies. For over three decades, Hi DMC has been the trusted destination management partner for travel agents worldwide.
@@ -80,7 +80,7 @@ export default function AboutPage() {
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-20 items-center">
             <div data-reveal>
               <p className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-4 font-['Manrope']">Who We Are</p>
-              <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-[#0D1B2A] leading-[1.1] mb-7">Hi DMC, a part of <em className="not-italic text-[#174358]">Hi Tours Group</em></h2>
+              <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-[#0D1B2A] leading-[1.1] mb-7">Hi DMC, a part of Hi Tours Group</h2>
               <div className="space-y-5 text-sm md:text-[15px] text-[#0D1B2A]/60 leading-relaxed font-['Manrope']">
                 <p>Hi DMC is the destination management division of Hi Tours Group, one of Asia's most established travel companies. Founded over three decades ago, Hi Tours Group has grown into a comprehensive travel conglomerate with operations across inbound tourism, outbound travel, MICE, and technology-driven B2B travel solutions.</p>
                 <p>With operations spanning six countries and partnerships with over 850 travel agents globally, Hi DMC delivers end-to-end ground handling with the precision of a local operator and the reach of a global network. From FIT packages and group tours to complex MICE events, every booking is backed by our on-ground teams.</p>
@@ -158,7 +158,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <div data-reveal className="max-w-2xl mb-16">
             <p className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-4 font-['Manrope']">Our Foundation</p>
-            <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-[#0D1B2A] leading-[1.1]">The values we <em className="not-italic text-[#174358]">strive for</em></h2>
+            <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-[#0D1B2A] leading-[1.1]">The values we strive for</h2>
           </div>
           <div data-reveal-group className="grid grid-cols-1 md:grid-cols-5 gap-6">
             {values.map((v) => (
@@ -178,7 +178,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <div data-reveal className="mb-12">
             <p className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-4 font-['Manrope']">Accreditations & Trust</p>
-            <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-[#0D1B2A] leading-[1.1]">Industry <em className="not-italic text-[#174358]">recognised</em></h2>
+            <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-[#0D1B2A] leading-[1.1]">Industry recognised</h2>
             <p className="text-sm md:text-[15px] text-[#0D1B2A]/50 mt-4 font-['Manrope']">Certified and accredited by the bodies that matter most in global travel.</p>
           </div>
           <div data-reveal-group className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -201,7 +201,7 @@ export default function AboutPage() {
         <div className="max-w-7xl mx-auto">
           <div data-reveal className="max-w-3xl mb-16">
             <p className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-4 font-['Manrope']">Where We Operate From</p>
-            <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-[#0D1B2A] leading-[1.1] mb-6">Our <em className="not-italic text-[#174358]">Headquarters</em></h2>
+            <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-[#0D1B2A] leading-[1.1] mb-6">Our Headquarters</h2>
             <p className="text-sm md:text-[15px] text-[#0D1B2A]/60 leading-relaxed font-['Manrope']">
               Located in the heart of Gurgaon's commercial district, our headquarters at Vatika City Point serves as the operational nerve centre for the entire Hi DMC network. A team of 120+ travel professionals including destination managers, operations specialists, tech engineers, and partner success leads orchestrate seamless ground handling across 45+ destinations and six countries, every single day.
             </p>
@@ -252,7 +252,7 @@ export default function AboutPage() {
       {/* CTA */}
       <section className="py-20 md:py-28 px-6 md:px-12 bg-[#174358]">
         <div className="max-w-3xl mx-auto text-center">
-          <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-white leading-[1.1] mb-5">Partner With <em className="not-italic text-white/60">Hi DMC</em></h2>
+          <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-white leading-[1.1] mb-5">Partner With Hi DMC</h2>
           <p data-reveal className="text-white/50 text-sm md:text-base mb-9 max-w-xl mx-auto font-['Manrope'] leading-relaxed">Join 850+ travel agents who trust us for reliable ground handling, live rates, and local expertise across 45+ destinations.</p>
           <div data-reveal className="flex flex-col sm:flex-row items-center justify-center gap-3">
             <Link to="/signup"><Button className="bg-white text-[#174358] hover:bg-white/90 rounded-full px-8 py-5 text-sm font-semibold shadow-lg">Sign Up as Partner <ArrowRight size={14} className="ml-1.5" /></Button></Link>

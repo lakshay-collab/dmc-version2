@@ -54,7 +54,7 @@ export default function TechnologyPage() {
               <p className="text-[11px] tracking-[0.25em] uppercase font-semibold text-white/40 mb-5 font-['Manrope']">Our Technology Platform</p>
               <h1 data-testid="tech-hero-heading" className="font-['Manrope'] font-bold tracking-tight text-5xl sm:text-6xl lg:text-7xl text-white leading-[1.05] mb-7">
                 Live Rates. Lowest Prices.<br />
-                <em className="not-italic text-white/50">30 Years of Trusted</em> DMC Excellence.
+                30 Years of Trusted DMC Excellence.
               </h1>
               <p className="text-white/50 text-base md:text-lg leading-relaxed mb-9 max-w-xl font-['Manrope']">
                 Your agents deserve live pricing from the world's largest travel inventory — combined with the superior destination management quality they've relied on for three decades. Our lowest price technology ensures every booking is the best deal available.
@@ -85,7 +85,7 @@ export default function TechnologyPage() {
           <div data-reveal className="text-center mb-16">
             <p className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-3 font-['Manrope']">How It Works</p>
             <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl lg:text-6xl text-[#0D1B2A] leading-[1.05] mb-5">
-              Plan. Book. <em className="not-italic text-[#174358]/50">Expand.</em>
+              Plan. Book. Expand.
             </h2>
             <p className="text-[#0D1B2A]/50 max-w-2xl mx-auto text-base leading-relaxed font-['Manrope']">
               Three steps to transform how your agency builds and sells travel. Live rates, instant confirmation, and the pricing power of 30 years of DMC relationships.
@@ -110,7 +110,7 @@ export default function TechnologyPage() {
             <div data-reveal>
               <p className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-3 font-['Manrope']">Step 01</p>
               <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-[#0D1B2A] leading-[1.1] mb-6">
-                Plan <em className="not-italic text-[#174358]/50">Dynamic Itineraries</em>
+                Plan Dynamic Itineraries
               </h2>
               <p className="text-[#0D1B2A]/55 leading-relaxed mb-7 text-base font-['Manrope']">
                 Build complete multi-destination itineraries with live rates from our global inventory. Drag and drop hotels, flights, transfers, tours and experiences — with real-time pricing that updates as you build. No more spreadsheets. No more waiting for supplier quotes.
@@ -151,7 +151,7 @@ export default function TechnologyPage() {
             <div data-reveal="right" className="order-1 lg:order-2">
               <p className="text-[11px] tracking-[0.25em] uppercase font-semibold text-white/40 mb-3 font-['Manrope']">Step 02</p>
               <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-white leading-[1.1] mb-6">
-                Book at <em className="not-italic text-white/50">Live Rates</em>
+                Book at Live Rates
               </h2>
               <p className="text-white/50 leading-relaxed mb-7 text-base font-['Manrope']">
                 Search, select, and confirm — all at live rates with instant booking confirmation. Our lowest price technology scans multiple suppliers in real time to guarantee your agents the most competitive pricing. No callbacks, no pending confirmations. Just instant, confirmed bookings.
@@ -181,7 +181,7 @@ export default function TechnologyPage() {
           <div data-reveal className="text-center mb-16">
             <p className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-3 font-['Manrope']">Step 03</p>
             <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-[#0D1B2A] leading-[1.1] mb-6">
-              Expand with <em className="not-italic text-[#174358]/50">Modular Packaging</em>
+              Expand with Modular Packaging
             </h2>
             <p className="text-[#0D1B2A]/50 max-w-2xl mx-auto text-base leading-relaxed font-['Manrope']">
               Scale from FIT bookings to complex group tours using our modular packaging engine. Combine single products into shared or private modules, then flexibly assemble them into complete itineraries. One system — unlimited combinations.
@@ -214,7 +214,7 @@ export default function TechnologyPage() {
             <div data-reveal>
               <p className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-3 font-['Manrope']">Platform Benefits</p>
               <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl text-[#0D1B2A] leading-[1.1] mb-6">
-                Everything Your <em className="not-italic text-[#174358]/50">Agency Needs</em>
+                Everything Your Agency Needs
               </h2>
               <p className="text-[#0D1B2A]/50 leading-relaxed mb-10 text-base font-['Manrope']">
                 Built for travel agents who demand live rates, the lowest prices, and the quality of a DMC with 30 years of on-the-ground expertise across 45+ countries.
@@ -265,7 +265,7 @@ export default function TechnologyPage() {
       <section data-testid="tech-cta" className="py-20 md:py-28 px-6 md:px-12 lg:px-24 bg-[#F4F1E8]">
         <div className="max-w-3xl mx-auto text-center">
           <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl lg:text-6xl text-[#0D1B2A] leading-[1.05] mb-6">
-            Ready for <em className="not-italic text-[#174358]/50">Live Rates</em> and the Best Pricing?
+            Ready for Live Rates and the Best Pricing?
           </h2>
           <p data-reveal className="text-[#0D1B2A]/50 text-base leading-relaxed mb-9 font-['Manrope']">
             Join 850+ travel agents who trust our platform for live pricing, instant confirmations, and the superior destination management quality we've delivered for over 30 years.

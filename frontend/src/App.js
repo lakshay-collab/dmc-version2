@@ -4,16 +4,15 @@ import { Toaster } from "@/components/ui/sonner";
 import Navbar from "@/components/Navbar";
 import ScrollEffects from "@/components/ScrollEffects";
 import Hero from "@/components/Hero";
+import AgentBenefits from "@/components/AgentBenefits";
+import DestinationShowcase from "@/components/DestinationShowcase";
 import WhyUs from "@/components/WhyUs";
 import TwoWays from "@/components/TwoWays";
 import WhoWeWorkWith from "@/components/WhoWeWorkWith";
-import TrendingDestinations from "@/components/TrendingDestinations";
 import Services from "@/components/Services";
 import TravelThemes from "@/components/TravelThemes";
 import OurTechnology from "@/components/OurTechnology";
-import HomeBlogPreview from "@/components/HomeBlogPreview";
 import Accreditations from "@/components/Accreditations";
-import GlobalDestinations from "@/components/GlobalDestinations";
 import Testimonials from "@/components/Testimonials";
 import ContactCTA from "@/components/ContactCTA";
 import Footer from "@/components/Footer";
@@ -43,6 +42,29 @@ import { useLocation } from "react-router-dom";
 import { RegionProvider } from "./context/RegionContext";
 import { RegionBanner } from "./components/RegionWidgets";
 
+// Every route change lands at the top of the new page — the one exception is a
+// navigation that explicitly asks to land on an in-page anchor (location.state.scrollTo),
+// which Home's own effect below handles instead.
+const ScrollToTop = () => {
+  const location = useLocation();
+
+  // Let us own scroll position entirely — otherwise the browser's own
+  // back/forward scroll memory can silently override the reset below.
+  useEffect(() => {
+    if ("scrollRestoration" in window.history) {
+      window.history.scrollRestoration = "manual";
+    }
+  }, []);
+
+  useEffect(() => {
+    if (location.state?.scrollTo) return;
+    // Explicit "instant" beats the site-wide CSS `scroll-behavior: smooth` —
+    // a cross-page navigation should land at the top immediately, not glide there.
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
+  }, [location.pathname, location.state]);
+  return null;
+};
+
 const Home = () => {
   const location = useLocation();
   useEffect(() => {
@@ -58,15 +80,14 @@ const Home = () => {
     <div className="min-h-screen bg-white" data-home-root>
       <Navbar />
       <Hero />
+      <AgentBenefits />
+      <DestinationShowcase />
       <WhyUs />
-      <TwoWays />
-      <TrendingDestinations />
       <Services />
-      <TravelThemes />
       <OurTechnology />
-      <GlobalDestinations />
+      <TwoWays />
+      <TravelThemes />
       <WhoWeWorkWith />
-      <HomeBlogPreview />
       <Testimonials />
       <Accreditations />
       <ContactCTA />
@@ -80,6 +101,7 @@ function App() {
     <BrowserRouter>
       <RegionProvider>
         <Toaster position="top-right" />
+        <ScrollToTop />
         <ScrollEffects />
         <RegionBanner />
         <Routes>

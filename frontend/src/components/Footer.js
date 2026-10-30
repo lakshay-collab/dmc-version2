@@ -5,7 +5,12 @@ import { useRegion } from "../context/RegionContext";
 
 const footerLinks = {
   Services: ["FIT Packages", "Custom Holidays", "Group Tours", "Hotels", "Flights", "Experiences", "Transfers", "MICE"],
-  Destinations: ["South Asia", "Southeast Asia", "East Asia", "Central Asia", "North Africa", "Middle East", "Indian Ocean Islands"],
+  Destinations: [
+    { label: "Nepal", href: "/destination/Nepal" },
+    { label: "Bhutan", href: "/destination/Bhutan" },
+    { label: "Mauritius", href: "/destination/Mauritius" },
+    { label: "Sri Lanka", href: "/destination/Sri Lanka" },
+  ],
   Company: [
     { label: "About Us", href: "/about" },
     { label: "Blog", href: "/blog" },

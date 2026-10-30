@@ -1,30 +1,18 @@
 import { useState, useEffect } from "react";
-import { ArrowRight, Check, Phone, Mail, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { ArrowRight, Check, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { toast } from "sonner";
 import axios from "axios";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
+import { FOCUS_DESTINATIONS } from "../data/focusDestinations";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
-// Iconic destinations we service — the panel image slowly cross-fades between them.
-const DEST_IMAGES = [
-  { id: "1564507592333-c60657eea523", name: "India" },
-  { id: "1503177119275-0aa32b3a9368", name: "Egypt" },
-  { id: "1540959733332-eab4deabeeaf", name: "Japan" },
-  { id: "1566296314736-6eaac1ca0cb9", name: "Sri Lanka" },
-  { id: "1528127269322-539801943592", name: "Vietnam" },
-  { id: "1570077188670-e3a8d69ac5ff", name: "Greece" },
-];
-
-const benefits = [
-  "Full access to our booking platform with live rates",
-  "Choose and dynamically package your own packages from hotels, experiences, and transfers",
-  "Ready-made itineraries from our own DMCs",
-  "Completely white-label B2B solution for travel agents",
-];
+// Our four signature destinations — the panel image slowly cross-fades between them.
+const DEST_IMAGES = FOCUS_DESTINATIONS.map((d) => ({ id: d.slug, name: d.name, url: d.cardImage }));
 
 const phoneCodes = [
   { code: "+91", flag: "\u{1F1EE}\u{1F1F3}", label: "India" },
@@ -91,7 +79,7 @@ export default function SignupPage() {
   const [scrollPos, setScrollPos] = useState(0);
   const [bIdx, setBIdx] = useState(0);
 
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: "instant" }); }, []);
 
   // Slowly cross-fade the destination image.
   useEffect(() => {
@@ -131,23 +119,7 @@ export default function SignupPage() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Compact Header */}
-      <div className="bg-[#0D1B2A] px-6 md:px-12 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <a href="/">
-            <img src="/hidmc-logo-white.png" alt="Hi DMC" className="h-9" />
-          </a>
-          <div className="hidden sm:flex items-center gap-4">
-            <a href="tel:+911244600000" className="flex items-center gap-1.5 text-sm font-bold text-white/70 hover:text-white transition-colors">
-              <Phone size={14} /> +91 124 4600000
-            </a>
-            <span className="text-white/20">|</span>
-            <a href="mailto:sales@hidmc.com" className="flex items-center gap-1.5 text-sm font-bold text-white/70 hover:text-white transition-colors">
-              <Mail size={14} /> sales@hidmc.com
-            </a>
-          </div>
-        </div>
-      </div>
+      <Navbar forceLight />
 
       {/* Hero + Form — premium card: rotating destination image panel + elegant form */}
       <section data-testid="signup-hero" className="py-12 md:py-16 px-6 md:px-12 lg:px-24 bg-[#F4F1E8]">
@@ -159,48 +131,13 @@ export default function SignupPage() {
               {DEST_IMAGES.map((d, i) => (
                 <img
                   key={d.id}
-                  src={`https://images.unsplash.com/photo-${d.id}?w=1100&q=85&auto=format&fit=crop`}
+                  src={d.url}
                   alt={`${d.name} — destination we service`}
                   loading="lazy"
                   className={`absolute inset-0 w-full h-full object-cover transition-[opacity,transform] ease-in-out duration-[900ms] ${i === bIdx ? "opacity-100 scale-105" : "opacity-0 scale-100"}`}
                 />
               ))}
-              <div className="absolute inset-0 bg-gradient-to-b from-[#0D1B2A]/72 via-[#0D1B2A]/58 to-[#0D1B2A]/90" aria-hidden="true" />
-              <div className="relative h-full flex flex-col justify-between p-8 md:p-10 lg:p-12">
-                <div>
-                  <p className="font-['Manrope'] text-[11px] tracking-[0.3em] uppercase font-semibold text-white/55 mb-6">Agent Access</p>
-                  <h1 data-testid="signup-heading" className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-[42px] text-white leading-[1.1] mb-5">
-                    Get live rates.<br />Book at the lowest prices.
-                  </h1>
-                  <p className="font-['Manrope'] text-white/60 text-sm leading-relaxed mb-7 max-w-sm">
-                    Free agent access to live rates from 500K+ hotels, 200+ airlines and 10K+ experiences worldwide.
-                  </p>
-                  <div className="space-y-3">
-                    {benefits.map((b) => (
-                      <div key={b} className="flex items-start gap-2.5">
-                        <Check size={14} className="text-white/60 mt-0.5 flex-shrink-0" />
-                        <span className="font-['Manrope'] text-[13px] text-white/70 leading-relaxed">{b}</span>
-                      </div>
-                    ))}
-                  </div>
-                </div>
-                <div className="pt-8 mt-8 border-t border-white/15 flex items-center gap-6">
-                  <div>
-                    <p className="font-['Manrope'] text-2xl font-bold tracking-tight text-white leading-none">850+</p>
-                    <p className="text-[10px] text-white/50 uppercase tracking-wider font-semibold mt-1.5">Active Agents</p>
-                  </div>
-                  <div className="w-px h-9 bg-white/15" />
-                  <div>
-                    <p className="font-['Manrope'] text-2xl font-bold tracking-tight text-white leading-none">30+</p>
-                    <p className="text-[10px] text-white/50 uppercase tracking-wider font-semibold mt-1.5">Years of Trust</p>
-                  </div>
-                  <div className="w-px h-9 bg-white/15" />
-                  <div>
-                    <p className="font-['Manrope'] text-2xl font-bold tracking-tight text-white leading-none">45+</p>
-                    <p className="text-[10px] text-white/50 uppercase tracking-wider font-semibold mt-1.5">Destinations</p>
-                  </div>
-                </div>
-              </div>
+              <div className="absolute inset-0 bg-gradient-to-b from-[#0D1B2A]/35 via-transparent to-[#0D1B2A]/55" aria-hidden="true" />
             </div>
 
             {/* Right — form */}
@@ -305,7 +242,7 @@ export default function SignupPage() {
             <div>
               <p data-reveal className="text-[11px] tracking-[0.2em] uppercase font-semibold text-[#174358]/60 mb-2">What Agents Say</p>
               <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl text-[#0D1B2A]">
-                Trusted by <em className="not-italic text-[#174358]/50">850+ Travel Agents</em>
+                Trusted by 850+ Travel Agents
               </h2>
             </div>
             <div className="hidden md:flex items-center gap-2">

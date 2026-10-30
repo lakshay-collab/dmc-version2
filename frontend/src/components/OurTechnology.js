@@ -31,15 +31,11 @@ export default function OurTechnology() {
     <section id="technology" data-testid="technology-section" className="py-20 md:py-28 px-6 md:px-12 lg:px-24 bg-[#0D1B2A] overflow-hidden">
       <div className="max-w-6xl mx-auto">
         {/* Header */}
-        <div data-reveal-group className="text-center max-w-3xl mx-auto mb-14 md:mb-16">
+        <div data-reveal-group className="text-center mx-auto mb-14 md:mb-16">
           <p data-reveal className="text-[11px] tracking-[0.3em] uppercase font-semibold text-white/40 mb-5 font-['Manrope']">Agent Portal</p>
-          <h2 data-testid="technology-heading" className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-5xl text-white leading-[1.08] mb-6">
-            <span data-reveal className="block">One portal for bookings.</span>
-            <span data-reveal className="block">One team for everything else.</span>
+          <h2 data-reveal data-testid="technology-heading" className="font-['Manrope'] font-bold tracking-tight whitespace-nowrap text-[3.8vw] sm:text-2xl md:text-3xl lg:text-4xl text-white leading-[1.08]">
+            One Portal for Bookings One Team for Everything Else
           </h2>
-          <p data-reveal className="text-white/50 text-base leading-relaxed font-['Manrope']">
-            Browse and book supported destination products online. For custom itineraries, groups and MICE, our team handles the quotation and destination coordination.
-          </p>
         </div>
 
         {/* One premium portal visual — framed like a high-end product */}

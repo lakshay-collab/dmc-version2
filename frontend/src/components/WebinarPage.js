@@ -144,7 +144,7 @@ export default function WebinarPage() {
           <div data-reveal-group className="max-w-3xl">
             <p className="text-[11px] tracking-[0.25em] uppercase font-semibold text-white/40 mb-5 font-['Manrope']">Webinars & Events</p>
             <h1 data-testid="webinar-hero-heading" className="font-['Manrope'] font-bold tracking-tight text-5xl sm:text-6xl lg:text-7xl text-white leading-[1.05] mb-7">
-              Learn, Connect, <em className="not-italic text-white/50">Grow.</em>
+              Learn, Connect, Grow.
             </h1>
             <p className="text-white/50 text-base md:text-lg leading-relaxed max-w-2xl font-['Manrope']">
               Join our expert-led webinars to discover new destinations, master our platform, and learn how top-performing agents are growing their business with Hi DMC.
@@ -287,7 +287,7 @@ export default function WebinarPage() {
           <div data-reveal className="text-center mb-12">
             <p className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-3 font-['Manrope']">Register</p>
             <h2 className="font-['Manrope'] font-bold tracking-tight text-4xl md:text-5xl lg:text-6xl text-[#0D1B2A] leading-[1.05] mb-5">
-              Sign Up for <em className="not-italic text-[#174358]/50">Upcoming Webinars</em>
+              Sign Up for Upcoming Webinars
             </h2>
             <p className="text-[#0D1B2A]/50 text-base leading-relaxed font-['Manrope']">
               Fill in the form below to register for our next webinar. You'll receive a confirmation email with the meeting link.

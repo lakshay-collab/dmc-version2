@@ -29,8 +29,11 @@ const indianStates = [
   "Jammu and Kashmir", "Ladakh", "Puducherry",
 ];
 
-const inputClass = "bg-white border-[#0D1B2A]/10 text-[#0D1B2A] placeholder:text-[#0D1B2A]/30 h-10 rounded-lg focus:border-[#174358]/40 text-sm";
+const inputClass = "bg-[#F8FAFB] border-[#0D1B2A]/08 text-[#0D1B2A] placeholder:text-[#0D1B2A]/30 h-11 rounded-lg focus:border-[#174358]/40 focus:ring-1 focus:ring-[#174358]/20 text-sm";
+const labelClass = "text-[11px] text-[#0D1B2A]/50 font-semibold uppercase tracking-wider mb-1.5 block";
 
+/* Same premium field treatment as the homepage quote form — labeled, pill-free
+   rounded fields on a soft fill — just scoped to this one destination. */
 function AgentSignupForm({ countryName }) {
   const [form, setForm] = useState({ first_name: "", last_name: "", agency_name: "", email: "", phone_code: "+91", phone: "", state: "" });
   const [loading, setLoading] = useState(false);
@@ -51,44 +54,64 @@ function AgentSignupForm({ countryName }) {
   };
 
   if (sent) return (
-    <div data-testid="hero-form-success" className="bg-white rounded-2xl p-8 text-center shadow-2xl">
-      <Check size={28} className="text-emerald-500 mx-auto mb-3" />
+    <div data-testid="hero-form-success" className="bg-white rounded-[1.75rem] p-10 text-center shadow-[0_44px_110px_-48px_rgba(13,27,42,0.5)]">
+      <div className="w-14 h-14 rounded-full bg-[#174358]/10 flex items-center justify-center mx-auto mb-5">
+        <Check size={26} className="text-[#174358]" />
+      </div>
       <h3 className="font-['Manrope'] font-bold tracking-tight text-xl text-[#0D1B2A] mb-2">Thank You for Signing Up</h3>
-      <p className="text-[#0D1B2A]/40 text-xs">Our customer success team will get in touch with you shortly.</p>
+      <p className="text-[#0D1B2A]/45 text-sm leading-relaxed">Our customer success team will get in touch with you shortly.</p>
     </div>
   );
 
   return (
-    <form onSubmit={handleSubmit} data-testid="hero-inquiry-form" className="bg-white rounded-2xl p-5 space-y-3 shadow-2xl">
+    <form onSubmit={handleSubmit} data-testid="hero-inquiry-form" className="bg-white rounded-[1.75rem] p-6 md:p-8 space-y-4 shadow-[0_44px_110px_-48px_rgba(13,27,42,0.5)]">
+      <div className="mb-1">
+        <h3 className="font-['Manrope'] font-bold tracking-tight text-2xl text-[#0D1B2A] mb-1">Sign Up for {countryName} Access</h3>
+        <p className="text-xs text-[#0D1B2A]/45">Get live rates and start booking in minutes.</p>
+      </div>
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <label className={labelClass}>First Name *</label>
+          <Input data-testid="hero-input-first" placeholder="First name" value={form.first_name} onChange={(e) => update("first_name", e.target.value)} className={inputClass} />
+        </div>
+        <div>
+          <label className={labelClass}>Last Name *</label>
+          <Input data-testid="hero-input-last" placeholder="Last name" value={form.last_name} onChange={(e) => update("last_name", e.target.value)} className={inputClass} />
+        </div>
+      </div>
       <div>
-        <p className="font-['Manrope'] font-bold tracking-tight text-lg text-[#0D1B2A] mb-0.5">Sign Up for {countryName} Access</p>
-        <p className="text-[10px] text-[#0D1B2A]/35">Get live rates and start booking.</p>
+        <label className={labelClass}>Agency Name *</label>
+        <Input data-testid="hero-input-agency" placeholder="Your travel agency" value={form.agency_name} onChange={(e) => update("agency_name", e.target.value)} className={inputClass} />
       </div>
-      <div className="grid grid-cols-2 gap-2">
-        <Input data-testid="hero-input-first" placeholder="First name *" value={form.first_name} onChange={(e) => update("first_name", e.target.value)} className={inputClass} />
-        <Input data-testid="hero-input-last" placeholder="Last name *" value={form.last_name} onChange={(e) => update("last_name", e.target.value)} className={inputClass} />
-      </div>
-      <Input data-testid="hero-input-agency" placeholder="Agency name *" value={form.agency_name} onChange={(e) => update("agency_name", e.target.value)} className={inputClass} />
-      <div className="flex gap-2">
-        <Select value={form.phone_code} onValueChange={(v) => { update("phone_code", v); if (v !== "+91") update("state", ""); }}>
-          <SelectTrigger className="bg-white border-[#0D1B2A]/10 text-[#0D1B2A] h-10 rounded-lg w-[100px] text-sm flex-shrink-0"><SelectValue /></SelectTrigger>
-          <SelectContent className="bg-white border-[#0D1B2A]/10 max-h-[200px]">
-            {phoneCodes.map((pc) => (<SelectItem key={pc.code} value={pc.code} className="text-sm"><span className="mr-1">{pc.flag}</span> {pc.code}</SelectItem>))}
-          </SelectContent>
-        </Select>
-        <Input data-testid="hero-input-phone" type="tel" placeholder="Phone *" value={form.phone} onChange={(e) => update("phone", e.target.value)} className={`${inputClass} flex-1`} />
+      <div>
+        <label className={labelClass}>Phone Number *</label>
+        <div className="flex gap-2">
+          <Select value={form.phone_code} onValueChange={(v) => { update("phone_code", v); if (v !== "+91") update("state", ""); }}>
+            <SelectTrigger className="bg-[#F8FAFB] border-[#0D1B2A]/08 text-[#0D1B2A] h-11 rounded-lg w-[100px] text-sm flex-shrink-0"><SelectValue /></SelectTrigger>
+            <SelectContent className="bg-white border-[#0D1B2A]/10 max-h-[200px]">
+              {phoneCodes.map((pc) => (<SelectItem key={pc.code} value={pc.code} className="text-sm"><span className="mr-1">{pc.flag}</span> {pc.code}</SelectItem>))}
+            </SelectContent>
+          </Select>
+          <Input data-testid="hero-input-phone" type="tel" placeholder="Phone number" value={form.phone} onChange={(e) => update("phone", e.target.value)} className={`${inputClass} flex-1`} />
+        </div>
       </div>
       {isIndia && (
-        <Select value={form.state} onValueChange={(v) => update("state", v)}>
-          <SelectTrigger data-testid="hero-input-state" className="bg-white border-[#0D1B2A]/10 text-[#0D1B2A] h-10 rounded-lg w-full text-sm"><SelectValue placeholder="Select state *" /></SelectTrigger>
-          <SelectContent className="bg-white border-[#0D1B2A]/10 max-h-[200px]">
-            {indianStates.map((s) => (<SelectItem key={s} value={s} className="text-sm">{s}</SelectItem>))}
-          </SelectContent>
-        </Select>
+        <div>
+          <label className={labelClass}>State *</label>
+          <Select value={form.state} onValueChange={(v) => update("state", v)}>
+            <SelectTrigger data-testid="hero-input-state" className="bg-[#F8FAFB] border-[#0D1B2A]/08 text-[#0D1B2A] h-11 rounded-lg w-full text-sm"><SelectValue placeholder="Select your state" /></SelectTrigger>
+            <SelectContent className="bg-white border-[#0D1B2A]/10 max-h-[200px]">
+              {indianStates.map((s) => (<SelectItem key={s} value={s} className="text-sm">{s}</SelectItem>))}
+            </SelectContent>
+          </Select>
+        </div>
       )}
-      <Input data-testid="hero-input-email" type="email" placeholder="Email *" value={form.email} onChange={(e) => update("email", e.target.value)} className={inputClass} />
-      <Button type="submit" disabled={loading} className="w-full bg-[#174358] text-white hover:bg-[#1e5a75] rounded-full py-4 text-sm font-semibold shadow-md">
-        {loading ? "Submitting..." : (<>Sign Up for Agent Login <ArrowRight size={13} className="ml-1" /></>)}
+      <div>
+        <label className={labelClass}>Email *</label>
+        <Input data-testid="hero-input-email" type="email" placeholder="email@agency.com" value={form.email} onChange={(e) => update("email", e.target.value)} className={inputClass} />
+      </div>
+      <Button type="submit" disabled={loading} className="w-full bg-[#174358] text-white hover:bg-[#1e5a75] rounded-full py-5 text-sm font-semibold shadow-sm transition-colors disabled:opacity-50">
+        {loading ? "Submitting..." : (<>Sign Up for Agent Login <ArrowRight size={14} className="ml-1.5" /></>)}
       </Button>
     </form>
   );
@@ -100,7 +123,7 @@ export default function DestinationDetail() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     setLoading(true);
     axios.get(`${API}/destinations/detail/${encodeURIComponent(name)}`)
       .then((r) => setData(r.data))

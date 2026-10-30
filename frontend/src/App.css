@@ -41,7 +41,9 @@
   border-bottom: 1px solid rgba(13, 27, 42, 0.06);
 }
 
-/* Testimonial scroll */
+/* Continuous left-drifting marquees (testimonials, travel styles) — these only
+   pause when the viewer clicks the strip, not on hover, so the motion reads as
+   deliberate and premium rather than twitchy. */
 @keyframes scrollTestimonials {
   0% { transform: translateX(0); }
   100% { transform: translateX(-50%); }
@@ -49,8 +51,13 @@
 .animate-scroll-testimonials {
   animation: scrollTestimonials 60s linear infinite;
 }
-.animate-scroll-testimonials:hover {
-  animation-play-state: paused;
+
+@keyframes scrollThemes {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+.animate-scroll-themes {
+  animation: scrollThemes 38s linear infinite;
 }
 
 /* Selection styling */

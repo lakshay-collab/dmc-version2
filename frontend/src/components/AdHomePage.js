@@ -5,6 +5,7 @@ import { Input } from "../components/ui/input";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
+import Navbar from "./Navbar";
 
 const API = process.env.REACT_APP_BACKEND_URL;
 
@@ -93,32 +94,25 @@ function InquiryModal({ open, onClose }) {
 export default function AdHomePage() {
   const [modalOpen, setModalOpen] = useState(false);
 
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: "instant" }); }, []);
 
   return (
     <div data-testid="ad-homepage" className="min-h-screen bg-white">
-      {/* Navbar */}
-      <nav className="sticky top-0 z-50 bg-white border-b border-[#0D1B2A]/06">
-        <div className="max-w-[1200px] mx-auto px-5 py-4 flex items-center justify-between">
-          <Link to="/ads" className="text-[22px] sm:text-[26px] font-bold text-[#0D1B2A] tracking-tight font-['Manrope'] font-bold tracking-tight hover:opacity-80 transition-opacity">
-            HI DMC
-          </Link>
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#destinations" className="text-[14px] text-[#0D1B2A]/60 hover:text-[#0D1B2A] font-medium transition-colors">Destinations</a>
-            <Link to="/about" className="text-[14px] text-[#0D1B2A]/60 hover:text-[#0D1B2A] font-medium transition-colors">About Us</Link>
-          </div>
-          <Button onClick={() => setModalOpen(true)} className="bg-[#174358] hover:bg-[#1e5a75] text-white rounded-full px-5 h-10 text-[13px] font-bold shadow-sm">
+      <Navbar forceLight />
+      <div className="sticky top-20 z-40 bg-white border-b border-[#0D1B2A]/06 mt-20">
+        <div className="max-w-[1200px] mx-auto px-5 py-2.5 flex items-center justify-end">
+          <Button onClick={() => setModalOpen(true)} className="bg-[#174358] hover:bg-[#1e5a75] text-white rounded-full px-5 h-9 text-[12px] font-bold shadow-sm">
             Inquire <span className="hidden sm:inline ml-1">/ Plan Your Holiday</span>
           </Button>
         </div>
-      </nav>
+      </div>
 
       {/* Hero */}
       <section className="relative overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-b from-white via-white to-[#f5f7fa]" />
         <div className="relative max-w-[1200px] mx-auto px-5 pt-20 sm:pt-28 pb-8 sm:pb-12 text-center">
           <h1 data-reveal className="font-['Manrope'] font-bold tracking-tight text-[40px] sm:text-[56px] lg:text-[68px] text-[#0D1B2A] leading-[1.1] mb-6">
-            Travel, <em className="not-italic text-[#174358]">your way.</em>
+            Travel, your way.
           </h1>
           <p data-reveal className="text-[15px] sm:text-[17px] text-[#0D1B2A]/55 max-w-xl mx-auto mb-10 leading-relaxed">
             Handcrafted tour packages across 45+ destinations. Local experts, transparent pricing, and 30 years of trust.

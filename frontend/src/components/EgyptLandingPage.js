@@ -5,6 +5,7 @@ import { Input } from "../components/ui/input";
 import { Link } from "react-router-dom";
 import { toast } from "sonner";
 import axios from "axios";
+import Navbar from "./Navbar";
 
 const API = process.env.REACT_APP_BACKEND_URL;
 
@@ -176,7 +177,7 @@ export default function EgyptLandingPage() {
   const [modalOpen, setModalOpen] = useState(false);
   const [modalPkg, setModalPkg] = useState(null);
 
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: "instant" }); }, []);
   const openCb = (t) => { setModalPkg(t || null); setModalOpen(true); };
 
   const filtered = PACKAGES.filter(p => {
@@ -190,20 +191,16 @@ export default function EgyptLandingPage() {
 
   return (
     <div data-testid="egypt-lp" className="min-h-screen bg-[#F8FAFB]">
-      {/* Header */}
-      <header className="bg-white border-b border-[#0D1B2A]/08 px-4 py-3.5 sticky top-0 z-50">
+      <Navbar forceLight />
+      <div className="bg-white border-b border-[#0D1B2A]/08 px-4 py-2.5 mt-20">
         <div className="max-w-[1200px] mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-3">
-            <Link to="/ads" className="text-[18px] font-bold text-[#0D1B2A] tracking-tight hover:opacity-80 transition-opacity font-['Manrope'] font-bold tracking-tight">HI DMC</Link>
-            <div className="w-px h-5 bg-[#0D1B2A]/10" />
-            <span className="text-[12px] text-[#0D1B2A]/55 hidden sm:inline">Destination Specialists to Egypt</span>
-            <span className="text-[10px] text-[#0D1B2A]/40 sm:hidden">Egypt Specialists</span>
-          </div>
+          <span className="text-[12px] text-[#0D1B2A]/55 hidden sm:inline">Destination Specialists to Egypt</span>
+          <span className="text-[10px] text-[#0D1B2A]/40 sm:hidden">Egypt Specialists</span>
           <Button data-testid="header-cb" onClick={() => openCb()} className="bg-[#174358] hover:bg-[#1e5a75] text-white rounded-full h-9 px-4 text-[12px] font-bold shadow-sm sm:hidden">
             <Phone size={13} className="mr-1.5" /> Get a Call
           </Button>
         </div>
-      </header>
+      </div>
 
       <div className="max-w-[1200px] mx-auto px-4 py-6 sm:py-8">
         <div className="mb-8">

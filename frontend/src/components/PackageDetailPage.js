@@ -1,11 +1,12 @@
 import { useEffect, useState, useRef } from "react";
 import { useParams, Link } from "react-router-dom";
-import { ArrowLeft, ArrowRight, ChevronDown, ChevronLeft, ChevronRight, Phone, Mail, Clock, MapPin, Shield, Users, Compass, Award, Coffee } from "lucide-react";
+import { ArrowLeft, ArrowRight, ChevronDown, ChevronLeft, ChevronRight, Phone, Clock, MapPin, Shield, Users, Compass, Award, Coffee } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { toast } from "sonner";
 import axios from "axios";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -218,7 +219,7 @@ export default function PackageDetailPage() {
   const heroRef = useRef(null);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    window.scrollTo({ top: 0, left: 0, behavior: "instant" });
     setLoading(true);
     axios.get(`${API}/destinations/${encodeURIComponent(name)}/packages/${slug}`)
       .then(r => { setPkg(r.data); setOpenStays({ 0: true }); })
@@ -290,12 +291,8 @@ export default function PackageDetailPage() {
           <img src={pkg.hero_image} alt={pkg.title} data-parallax="18" className="w-full h-full object-cover scale-110" />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A]/80 via-[#0D1B2A]/40 to-[#0D1B2A]/10" />
         </div>
-        {/* Top bar */}
-        <div className="absolute top-0 left-0 right-0 z-20 px-5 md:px-12 py-5 flex items-center justify-between">
-          <a href="/"><img src="/hidmc-logo-white.png" alt="Hi DMC" className="h-8 md:h-9" /></a>
-          <div className="hidden md:flex items-center gap-6">
-            <a href="tel:+911244600000" className="text-white/60 text-sm hover:text-white transition-colors">+91 124 4600000</a>
-          </div>
+        <div className="absolute top-0 left-0 right-0 z-20">
+          <Navbar />
         </div>
         <div className="relative z-10 w-full px-5 md:px-12 lg:px-20 pb-10 md:pb-16">
           <div className="max-w-[1400px] mx-auto">

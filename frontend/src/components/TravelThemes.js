@@ -1,51 +1,72 @@
-import { useRegion } from "../context/RegionContext";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { ArrowUpRight } from "lucide-react";
 
-const indiaThemes = [
-  { title: "Safari & Wildlife", desc: "Big Five encounters, gorilla treks, and immersive wildlife experiences.", image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=500&q=80", countries: "Kenya, Tanzania, South Africa" },
-  { title: "Northern Lights", desc: "Chase the aurora across Iceland, Norway, and Finland.", image: "https://images.unsplash.com/photo-1483347756197-71ef80e95f73?w=500&q=80", countries: "Iceland, Norway, Finland" },
-  { title: "Honeymoon & Romance", desc: "Overwater villas, private dinners, and sunset cruises.", image: "https://images.unsplash.com/photo-1439130490301-25e322d88054?w=500&q=80", countries: "Maldives, Greece, Italy" },
-  { title: "Adventure & Outdoors", desc: "Treks, bungee jumps, and adrenaline-charged itineraries.", image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=500&q=80", countries: "New Zealand, Peru, Iceland" },
-  { title: "Cultural Immersions", desc: "Tea ceremonies, cooking classes, and temple tours.", image: "https://images.unsplash.com/photo-1528164344705-47542687000d?w=500&q=80", countries: "Japan, Morocco, Indonesia" },
-  { title: "Luxury & Wellness", desc: "World-class spas, retreats, and private island escapes.", image: "https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=500&q=80", countries: "Maldives, Thailand, UAE" },
+// Every card links somewhere real — the destination page for the two we don't
+// have matching articles for yet, a destination-specific blog post where one exists.
+const experiences = [
+  { title: "Himalayan Trekking", dest: "Nepal", desc: "Everest and Annapurna trails, mountain lodges and sherpa-guided treks.", image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=700&q=85", href: "/destination/Nepal" },
+  { title: "Monastery Pilgrimage", dest: "Bhutan", desc: "The Tiger's Nest hike, dzong fortresses and blessing ceremonies.", image: "https://images.unsplash.com/photo-1593331792312-15bead7aaa9b?w=700&q=85", href: "/destination/Bhutan" },
+  { title: "Lagoon & Island Luxury", dest: "Mauritius", desc: "Overwater villas, Le Morne sunsets and barefoot-luxury resorts.", image: "https://images.unsplash.com/photo-1573843981267-be1999ff37cd?w=700&q=85", href: "/blog/honeymoon-in-mauritius-private-lagoon-villas" },
+  { title: "Tea Country & Heritage Rail", dest: "Sri Lanka", desc: "Misted plantations, the Ella scenic railway and colonial hill towns.", image: "https://images.unsplash.com/photo-1578519050142-afb511e518de?w=700&q=85", href: "/blog/why-sri-lankas-tea-estate-hotels-are-a-must-visit" },
+  { title: "Himalayan Valleys", dest: "Bhutan", desc: "Punakha's dzong, Phobjikha's crane valley and farmhouse stays.", image: "https://images.unsplash.com/photo-1637826134825-e54e98a9bce7?w=700&q=85", href: "/destination/Bhutan" },
+  { title: "Wildlife & National Parks", dest: "Sri Lanka", desc: "Leopard tracking in Yala and elephant gatherings at Minneriya.", image: "https://images.unsplash.com/photo-1549366021-9f761d450615?w=700&q=85", href: "/blog/luxury-vs-budget-sri-lankas-top-safari-lodges" },
 ];
 
-const usUkThemes = [
-  { title: "Safari & Wildlife", desc: "Big Five encounters, jungle safaris, and immersive wildlife experiences across Asia and Africa.", image: "https://images.unsplash.com/photo-1516426122078-c23e76319801?w=500&q=80", countries: "Sri Lanka, India, Nepal" },
-  { title: "Honeymoon & Romance", desc: "Private villas, candlelit dinners on the beach, and sunset cruises on the Nile.", image: "https://images.unsplash.com/photo-1439130490301-25e322d88054?w=500&q=80", countries: "Sri Lanka, Egypt, Vietnam" },
-  { title: "Luxury & Wellness", desc: "Ayurvedic retreats, world-class spas, and private island escapes.", image: "https://images.unsplash.com/photo-1600334129128-685c5582fd35?w=500&q=80", countries: "Sri Lanka, India, UAE" },
-  { title: "Cultural Immersions", desc: "Tea ceremonies, temple trails, and cooking classes with local families.", image: "https://images.unsplash.com/photo-1528164344705-47542687000d?w=500&q=80", countries: "Japan, Cambodia, India" },
-  { title: "Adventure & Outdoors", desc: "Himalayan treks, desert safaris, and whitewater rafting.", image: "https://images.unsplash.com/photo-1551632811-561732d1e306?w=500&q=80", countries: "Nepal, Jordan, Vietnam" },
-  { title: "Beach & Island Escapes", desc: "Pristine coastlines, turquoise lagoons, and laidback tropical getaways.", image: "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=500&q=80", countries: "Sri Lanka, Vietnam, Cambodia" },
-];
+function ThemeCard({ t, testid }) {
+  return (
+    <Link to={t.href} onClick={(e) => e.stopPropagation()} data-testid={testid}
+      className="group relative block shrink-0 rounded-2xl overflow-hidden shadow-[0_18px_50px_-24px_rgba(13,27,42,0.25)] w-[78vw] sm:w-[360px] h-[440px]">
+      <img src={t.image} alt={t.title} loading="lazy" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+      <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A] via-[#0D1B2A]/35 to-transparent" />
+      <div className="absolute inset-x-0 bottom-0 p-6 font-['Manrope']">
+        <p className="text-[11px] text-white/70 font-semibold uppercase tracking-[0.2em] mb-2">{t.dest}</p>
+        <div className="flex items-center justify-between gap-3 mb-1.5">
+          <h3 className="font-['Manrope'] font-bold tracking-tight text-2xl text-white">{t.title}</h3>
+          <span className="shrink-0 w-9 h-9 rounded-full border border-white/25 flex items-center justify-center text-white group-hover:bg-white group-hover:text-[#0D1B2A] group-hover:border-white transition-all duration-300">
+            <ArrowUpRight size={15} className="transition-transform duration-300 group-hover:rotate-45" />
+          </span>
+        </div>
+        <p className="text-xs text-white/60 leading-relaxed">{t.desc}</p>
+      </div>
+    </Link>
+  );
+}
 
 export default function TravelThemes() {
-  const { config } = useRegion();
-  const isUsUk = config.code === "us" || config.code === "uk";
-  const themes = isUsUk ? usUkThemes : indiaThemes;
+  const doubled = [...experiences, ...experiences];
+  const [clickPaused, setClickPaused] = useState(false);
+  const [hovering, setHovering] = useState(false);
+  // Drifts on its own; a click freezes it, and hovering while frozen sets it
+  // moving again until the cursor leaves.
+  const running = !clickPaused || hovering;
 
   return (
-    <section id="themes" data-testid="travel-themes-section" className="py-20 md:py-28 px-6 md:px-12 lg:px-24 bg-[#F8FAFB]">
-      <div className="max-w-7xl mx-auto">
-        <div className="text-center mb-16">
-          <p data-reveal className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-5">Curated Experiences</p>
-          <h2 data-reveal data-testid="themes-heading" className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl text-[#0D1B2A] mb-4 leading-tight">
-            Travel <em className="not-italic text-[#174358]">Styles</em>
-          </h2>
-        </div>
-        <div data-reveal-group className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 md:gap-6">
-          {themes.map((t) => (
-            <div key={t.title} data-testid={`theme-${t.title.toLowerCase().replace(/\s+/g, '-').replace(/&/g, 'and')}`}
-              className="group relative rounded-2xl overflow-hidden shadow-[0_18px_50px_-24px_rgba(13,27,42,0.25)] transition-shadow duration-500 cursor-pointer h-80 md:h-96">
-              <img src={t.image} alt={t.title} data-parallax="20" className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-              <div className="absolute inset-0 bg-gradient-to-t from-[#0D1B2A] via-[#0D1B2A]/40 to-transparent" />
-              <div className="absolute inset-x-0 bottom-0 p-6 font-['Manrope']">
-                <p className="text-[11px] text-white/70 font-semibold uppercase tracking-[0.2em] mb-2">{t.countries}</p>
-                <h3 className="font-['Manrope'] font-bold tracking-tight text-2xl text-white mb-1.5">{t.title}</h3>
-                <p className="text-xs text-white/60 leading-relaxed">{t.desc}</p>
-              </div>
-            </div>
+    <section id="themes" data-testid="travel-themes-section" className="py-20 md:py-28 bg-[#F4F1E8] overflow-hidden">
+      <div className="max-w-7xl mx-auto px-6 md:px-12 lg:px-24 mb-12 md:mb-14 text-center">
+        <p data-reveal className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-5">Curated Experiences</p>
+        <h2 data-reveal data-testid="themes-heading" className="font-['Manrope'] font-bold tracking-tight whitespace-nowrap text-[3.8vw] sm:text-2xl md:text-3xl lg:text-4xl text-[#0D1B2A] leading-tight">
+          Travel Styles Across All Destinations
+        </h2>
+      </div>
+
+      <div className="relative">
+        <div
+          data-testid="themes-marquee"
+          onClick={() => setClickPaused((p) => !p)}
+          onMouseEnter={() => setHovering(true)}
+          onMouseLeave={() => setHovering(false)}
+          onTouchStart={() => setClickPaused((p) => !p)}
+          className="flex gap-5 md:gap-6 pl-6 md:pl-12 lg:pl-24 animate-scroll-themes cursor-pointer"
+          style={{ width: "max-content", animationPlayState: running ? "running" : "paused" }}
+          title={clickPaused ? "Hover to resume" : "Click to pause"}
+        >
+          {doubled.map((t, i) => (
+            <ThemeCard key={`${t.title}-${i}`} t={t} testid={i < experiences.length ? `theme-${t.title.toLowerCase().replace(/\s+/g, "-")}` : undefined} />
           ))}
         </div>
+        <div className="absolute top-0 left-0 w-16 md:w-24 h-full bg-gradient-to-r from-[#F4F1E8] to-transparent pointer-events-none z-10" />
+        <div className="absolute top-0 right-0 w-16 md:w-24 h-full bg-gradient-to-l from-[#F4F1E8] to-transparent pointer-events-none z-10" />
       </div>
     </section>
   );

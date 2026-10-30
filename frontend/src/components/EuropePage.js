@@ -165,7 +165,7 @@ export default function EuropePage() {
       <section className="py-20 md:py-28 px-6 md:px-12 bg-white">
         <div className="max-w-7xl mx-auto">
           <p data-reveal className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-4">What We Do</p>
-          <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl leading-tight text-[#0D1B2A] mb-12">Our services for <em className="not-italic text-[#174358]">Europe</em></h2>
+          <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl leading-tight text-[#0D1B2A] mb-12">Our services for Europe</h2>
           <div data-reveal-group className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {SERVICES.map(s => (
               <div key={s.title} className="bg-[#F8FAFB] rounded-2xl p-6 shadow-[0_18px_50px_-24px_rgba(13,27,42,0.2)] hover:shadow-[0_28px_70px_-28px_rgba(13,27,42,0.28)] transition-shadow duration-500 group">
@@ -195,7 +195,7 @@ export default function EuropePage() {
       <section className="py-20 md:py-28 px-6 md:px-12 bg-[#F8FAFB]">
         <div className="max-w-7xl mx-auto">
           <p data-reveal className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-4">20+ European Destinations</p>
-          <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl leading-tight text-[#0D1B2A] mb-10">Browse by <em className="not-italic text-[#174358]">region</em></h2>
+          <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl leading-tight text-[#0D1B2A] mb-10">Browse by region</h2>
 
           {/* Region tabs */}
           <div className="flex flex-wrap gap-2 mb-8">
@@ -233,7 +233,7 @@ export default function EuropePage() {
       <section className="py-20 md:py-28 px-6 md:px-12 bg-white">
         <div className="max-w-7xl mx-auto">
           <p data-reveal className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-4">Travel Styles</p>
-          <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl leading-tight text-[#0D1B2A] mb-12">Sell Europe <em className="not-italic text-[#174358]">by theme</em></h2>
+          <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl leading-tight text-[#0D1B2A] mb-12">Sell Europe by theme</h2>
           <div data-reveal-group className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {STYLES.map(t => (
               <div key={t.title} className="rounded-2xl overflow-hidden group flex flex-col sm:flex-row bg-white shadow-[0_18px_50px_-24px_rgba(13,27,42,0.22)] hover:shadow-[0_28px_70px_-28px_rgba(13,27,42,0.3)] transition-shadow duration-500">
@@ -262,7 +262,7 @@ export default function EuropePage() {
       <section className="py-20 md:py-28 px-6 md:px-12 bg-[#0D1B2A]">
         <div className="max-w-7xl mx-auto">
           <p data-reveal className="text-[11px] tracking-[0.25em] uppercase font-semibold text-white/40 mb-4">Ready-to-sell Itineraries</p>
-          <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl leading-tight text-white mb-4">Custom packages <em className="not-italic text-white/50">we create for your clients</em></h2>
+          <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl leading-tight text-white mb-4">Custom packages we create for your clients</h2>
           <p data-reveal className="font-['Manrope'] text-sm text-white/40 mb-12 leading-relaxed">Customise dates, hotels, and experiences with live rates on the platform.</p>
           <div data-reveal-group className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             {PACKAGES.map(p => (
@@ -286,7 +286,7 @@ export default function EuropePage() {
       <section className="py-20 md:py-28 px-6 md:px-12 bg-[#F4F1E8]">
         <div className="max-w-7xl mx-auto">
           <p data-reveal className="text-[11px] tracking-[0.25em] uppercase font-semibold text-[#174358]/60 mb-4">Bookable Experiences</p>
-          <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl leading-tight text-[#0D1B2A] mb-12">Europe <em className="not-italic text-[#174358]">experiences</em></h2>
+          <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-5xl leading-tight text-[#0D1B2A] mb-12">Europe experiences</h2>
           <div data-reveal-group className="grid grid-cols-2 md:grid-cols-4 gap-5">
             {EXPERIENCES.map(e => (
               <div key={e.title} className="relative rounded-2xl overflow-hidden group cursor-pointer" style={{ height: "220px" }}>

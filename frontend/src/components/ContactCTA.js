@@ -1,29 +1,17 @@
 import { useState, useEffect } from "react";
-import { ArrowRight, Check, Phone, Mail } from "lucide-react";
+import { ArrowRight, Check } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Textarea } from "../components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { toast } from "sonner";
 import axios from "axios";
+import { FOCUS_DESTINATIONS } from "../data/focusDestinations";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
 
-// Iconic destinations we service — the panel image slowly cross-fades between them.
-const DEST_IMAGES = [
-  { id: "1564507592333-c60657eea523", name: "India" },
-  { id: "1503177119275-0aa32b3a9368", name: "Egypt" },
-  { id: "1540959733332-eab4deabeeaf", name: "Japan" },
-  { id: "1566296314736-6eaac1ca0cb9", name: "Sri Lanka" },
-  { id: "1528127269322-539801943592", name: "Vietnam" },
-  { id: "1570077188670-e3a8d69ac5ff", name: "Greece" },
-];
-
-const benefits = [
-  "One DMC relationship across every destination",
-  "Book destination products in the agent portal",
-  "Specialist team for FIT, groups & MICE",
-];
+// Our four signature destinations — the panel image slowly cross-fades between them.
+const DEST_IMAGES = FOCUS_DESTINATIONS.map((d) => ({ id: d.slug, name: d.name, url: d.cardImage }));
 
 const phoneCodes = [
   { code: "+91", flag: "\u{1F1EE}\u{1F1F3}", label: "India" },
@@ -110,40 +98,13 @@ export default function ContactCTA() {
             {DEST_IMAGES.map((d, i) => (
               <img
                 key={d.id}
-                src={`https://images.unsplash.com/photo-${d.id}?w=1100&q=85&auto=format&fit=crop`}
+                src={d.url}
                 alt={`${d.name} — destination we service`}
                 loading="lazy"
                 className={`absolute inset-0 w-full h-full object-cover transition-[opacity,transform] ease-in-out duration-[900ms] ${i === bIdx ? "opacity-100 scale-105" : "opacity-0 scale-100"}`}
               />
             ))}
-            <div className="absolute inset-0 bg-gradient-to-b from-[#0D1B2A]/70 via-[#0D1B2A]/55 to-[#0D1B2A]/88" aria-hidden="true" />
-            <div className="relative h-full flex flex-col justify-between p-8 md:p-10 lg:p-12">
-              <div>
-                <p className="font-['Manrope'] text-[11px] tracking-[0.3em] uppercase font-semibold text-white/55 mb-6">Partner With Us</p>
-                <h2 data-testid="contact-heading" className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl lg:text-[42px] text-white leading-[1.1] mb-5">
-                  More destinations.<br />One DMC relationship.
-                </h2>
-                <p className="font-['Manrope'] text-white/60 text-sm leading-relaxed mb-8 max-w-xs">
-                  Register for the agent portal, or share your next requirement.
-                </p>
-                <div className="space-y-3">
-                  {benefits.map((b, i) => (
-                    <div key={i} className="flex items-start gap-2.5">
-                      <Check size={14} className="text-white/60 mt-0.5 flex-shrink-0" />
-                      <span className="font-['Manrope'] text-[13px] text-white/70 leading-relaxed">{b}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div className="pt-8 mt-8 border-t border-white/15 flex flex-wrap gap-x-7 gap-y-2">
-                <a href="mailto:sales@hidmc.com" className="font-['Manrope'] flex items-center gap-2 text-[13px] text-white/60 hover:text-white transition-colors">
-                  <Mail size={14} className="text-white/45" /> sales@hidmc.com
-                </a>
-                <a href="tel:+911244600000" className="font-['Manrope'] flex items-center gap-2 text-[13px] text-white/60 hover:text-white transition-colors">
-                  <Phone size={14} className="text-white/45" /> +91 124 4600000
-                </a>
-              </div>
-            </div>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0D1B2A]/35 via-transparent to-[#0D1B2A]/55" aria-hidden="true" />
           </div>
 
           {/* Elegant quote form */}

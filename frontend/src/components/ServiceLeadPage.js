@@ -1,11 +1,12 @@
 import { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
-import { Check, SlidersHorizontal, Users, Monitor, LayoutGrid, ArrowRight, Phone, Mail, Star, ChevronLeft, ChevronRight } from "lucide-react";
+import { Check, SlidersHorizontal, Users, Monitor, LayoutGrid, ArrowRight, Star, ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { Input } from "../components/ui/input";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "../components/ui/select";
 import { toast } from "sonner";
 import axios from "axios";
+import Navbar from "./Navbar";
 import Footer from "./Footer";
 
 const API = `${process.env.REACT_APP_BACKEND_URL}/api`;
@@ -132,7 +133,7 @@ export default function ServiceLeadPage() {
   const [submitted, setSubmitted] = useState(false);
   const [scrollPos, setScrollPos] = useState(0);
 
-  useEffect(() => { window.scrollTo(0, 0); }, [serviceSlug]);
+  useEffect(() => { window.scrollTo({ top: 0, left: 0, behavior: "instant" }); }, [serviceSlug]);
 
   if (!svc) return (
     <div className="min-h-screen bg-white flex flex-col items-center justify-center gap-4">
@@ -180,17 +181,7 @@ export default function ServiceLeadPage() {
 
   return (
     <div data-testid="service-lead-page" className="min-h-screen bg-white">
-      {/* Compact Header */}
-      <div className="bg-[#0D1B2A] px-6 md:px-12 py-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-between">
-          <a href="/"><img src="/hidmc-logo-white.png" alt="Hi DMC" className="h-9" /></a>
-          <div className="hidden sm:flex items-center gap-4">
-            <a href="tel:+911244600000" className="flex items-center gap-1.5 text-sm font-bold text-white/70 hover:text-white transition-colors"><Phone size={14} /> +91 124 4600000</a>
-            <span className="text-white/20">|</span>
-            <a href="mailto:sales@hidmc.com" className="flex items-center gap-1.5 text-sm font-bold text-white/70 hover:text-white transition-colors"><Mail size={14} /> sales@hidmc.com</a>
-          </div>
-        </div>
-      </div>
+      <Navbar />
 
       {/* Hero + Form */}
       <section data-testid="service-hero" className="py-12 md:py-16 px-6 md:px-12 lg:px-24 bg-gradient-to-b from-[#0D1B2A] to-[#174358]">
@@ -321,7 +312,7 @@ export default function ServiceLeadPage() {
             <div>
               <p data-reveal className="text-[11px] tracking-[0.2em] uppercase font-semibold text-[#174358]/60 mb-2">What Agents Say</p>
               <h2 data-reveal className="font-['Manrope'] font-bold tracking-tight text-3xl md:text-4xl text-[#0D1B2A]">
-                Trusted by <em className="not-italic text-[#174358]/50">850+ Travel Agents</em>
+                Trusted by 850+ Travel Agents
               </h2>
             </div>
             <div className="hidden md:flex items-center gap-2">

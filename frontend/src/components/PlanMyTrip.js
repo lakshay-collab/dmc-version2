@@ -65,7 +65,7 @@ export default function PlanMyTrip() {
         <div className="relative z-10 max-w-7xl mx-auto px-6 md:px-12 py-20 md:py-24 w-full">
           <p data-reveal className="text-[11px] tracking-[0.2em] uppercase font-semibold text-white/40 mb-5">Plan Your Trip</p>
           <h1 data-reveal data-testid="plan-trip-heading" className="font-['Manrope'] font-bold tracking-tight text-4xl sm:text-5xl md:text-6xl text-white leading-tight mb-5">
-            Tell Us What You <em className="not-italic text-white/60">Need</em>
+            Tell Us What You Need
           </h1>
           <p data-reveal className="text-base text-white/45 max-w-xl leading-relaxed">Share your travel requirements and our team will craft a custom itinerary with the best rates — typically within 48 hours.</p>
         </div>

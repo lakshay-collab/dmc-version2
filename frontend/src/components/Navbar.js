@@ -4,6 +4,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import { Menu, X, ChevronDown, MapPin, Users, SlidersHorizontal, Monitor, FileText, Hotel, Plane, ArrowLeftRight, Compass, Car, CalendarCheck, Layers, Settings2, ArrowRight, Search, Train, Package, LayoutGrid, Clock } from "lucide-react";
 import { Button } from "../components/ui/button";
 import { useRegion } from "../context/RegionContext";
+import { FOCUS_DESTINATIONS } from "../data/focusDestinations";
 import axios from "axios";
 
 const PORTAL = process.env.REACT_APP_AGENT_PORTAL_URL;
@@ -26,7 +27,6 @@ export default function Navbar({ forceLight = false }) {
   const [openDD, setOpenDD] = useState(null);
   const [destSearch, setDestSearch] = useState("");
   const [allDests, setAllDests] = useState([]);
-  const [trendingDests, setTrendingDests] = useState([]);
   const [gateModal, setGateModal] = useState(null);
   const [recentDests, setRecentDests] = useState(getRecentDests);
   const ref = useRef(null);
@@ -56,12 +56,6 @@ export default function Navbar({ forceLight = false }) {
         : r.data;
       setAllDests(all);
     }).catch(() => {});
-    axios.get(`${API}/destinations/trending`).then((r) => {
-      const all = config.destinations
-        ? r.data.filter(d => config.destinations.includes(d.name))
-        : r.data;
-      setTrendingDests(all.slice(0, 8));
-    }).catch(() => {});
   }, [config.code, config.destinations]);
 
   const close = () => { setOpenDD(null); setMobileOpen(false); setDestSearch(""); };
@@ -80,15 +74,6 @@ export default function Navbar({ forceLight = false }) {
   const txtM = isLight ? "text-[#0D1B2A]/60" : "text-white/70";
 
   const NavTab = ({ label, id }) => {
-    // For US/UK: Destinations just scrolls to section, no dropdown
-    if (id === "dest" && config.hideDestSearch) {
-      return (
-        <button data-testid={`nav-${id}`} onClick={(e) => goHash(e, "#explore-destinations")}
-          className={`flex items-center gap-1.5 px-4 py-2 text-[13px] font-bold tracking-wide rounded-full transition-all ${txtM}`}>
-          {label}
-        </button>
-      );
-    }
     return (
       <button data-testid={`nav-${id}`} onClick={() => toggle(id)}
         className={`flex items-center gap-1.5 px-4 py-2 text-[13px] font-bold tracking-wide rounded-full transition-all ${openDD === id ? (isLight ? "bg-[#174358] text-white" : "bg-white text-[#0D1B2A]") : txtM}`}>
@@ -100,7 +85,12 @@ export default function Navbar({ forceLight = false }) {
   return (
     <nav data-testid="navbar" ref={ref} className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${scrolled ? "py-2 px-4" : "py-3 bg-transparent px-0"}`}>
       <div className={`mx-auto flex items-center justify-between transition-all duration-500 ease-[cubic-bezier(0.22,1,0.36,1)] ${scrolled ? "max-w-7xl rounded-full bg-white/90 backdrop-blur-xl shadow-[0_18px_44px_-18px_rgba(13,27,42,0.32)] border border-white/50 px-5 md:px-6 py-1.5" : "max-w-7xl px-6 md:px-12 py-0"}`}>
-        <Link to="/" data-testid="navbar-logo" className="flex items-center flex-shrink-0">
+        <Link
+          to="/"
+          data-testid="navbar-logo"
+          className="flex items-center flex-shrink-0"
+          onClick={() => window.scrollTo({ top: 0, left: 0, behavior: "smooth" })}
+        >
           <img src={isLight ? "/hidmc-logo-color.png" : "/hidmc-logo-white.png"} alt="Hi DMC" className="transition-all duration-300 h-10" />
         </Link>
 
@@ -115,15 +105,10 @@ export default function Navbar({ forceLight = false }) {
 
         <div className="hidden lg:flex items-center gap-2">
           <Link to="/signup" data-testid="nav-agent-signup">
-            <Button variant="outline" className={`rounded-full px-5 py-2.5 text-xs font-bold tracking-wide transition-all ${isLight ? "border-[#174358]/20 text-[#174358] hover:bg-[#174358]/05" : "border-white/30 text-white hover:bg-white/10"}`}>
+            <Button className={`rounded-full px-5 py-2.5 text-xs font-bold tracking-wide transition-all ${isLight ? "bg-[#174358] text-white hover:bg-[#1e5a75] shadow-lg shadow-[#174358]/15" : "bg-white text-[#0D1B2A] hover:bg-white/90"}`}>
               Agent Sign Up
             </Button>
           </Link>
-          <a href={PORTAL} target="_blank" rel="noopener noreferrer" data-testid="nav-agent-portal">
-            <Button className={`rounded-full px-5 py-2.5 text-xs font-bold tracking-wide transition-all ${isLight ? "bg-[#174358] text-white hover:bg-[#1e5a75] shadow-lg shadow-[#174358]/15" : "bg-white text-[#0D1B2A] hover:bg-white/90"}`}>
-              Agent Login
-            </Button>
-          </a>
         </div>
 
         <button data-testid="mobile-menu-toggle" className={`lg:hidden ${isLight ? "text-[#0D1B2A]" : "text-white"}`} onClick={() => setMobileOpen(!mobileOpen)}>
@@ -136,19 +121,16 @@ export default function Navbar({ forceLight = false }) {
         <div data-testid="dest-dropdown" className="hidden lg:block absolute top-full left-0 right-0 animate-fadeInUp" style={{ animationDuration: "200ms" }}>
           <div className="bg-white border-t border-[#0D1B2A]/06 shadow-[0_30px_80px_-20px_rgba(13,27,42,0.18)]">
             <div className="max-w-5xl mx-auto px-12 py-10">
-              {/* Search - hidden for US/UK */}
-              {!config.hideDestSearch && (
-                <div className="max-w-xl mb-8">
-                  <p className="text-[#0D1B2A]/40 text-xs uppercase tracking-[0.15em] font-bold mb-3">Find a Destination</p>
-                  <div className="relative">
-                    <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0D1B2A]/20" />
-                    <input data-testid="dest-search" type="text" placeholder="Where do you want to go?" value={destSearch} onChange={(e) => setDestSearch(e.target.value)} autoFocus
-                      className="w-full pl-12 pr-4 py-4 rounded-2xl bg-[#F8FAFB] border border-[#0D1B2A]/08 text-base text-[#0D1B2A] placeholder:text-[#0D1B2A]/25 focus:outline-none focus:border-[#174358]/25 focus:bg-white transition-all" />
-                  </div>
+              <div className="max-w-xl mb-8">
+                <p className="text-[#0D1B2A]/40 text-xs uppercase tracking-[0.15em] font-bold mb-3">Find a Destination</p>
+                <div className="relative">
+                  <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-[#0D1B2A]/20" />
+                  <input data-testid="dest-search" type="text" placeholder="Where do you want to go?" value={destSearch} onChange={(e) => setDestSearch(e.target.value)} autoFocus
+                    className="w-full pl-12 pr-4 py-4 rounded-2xl bg-[#F8FAFB] border border-[#0D1B2A]/08 text-base text-[#0D1B2A] placeholder:text-[#0D1B2A]/25 focus:outline-none focus:border-[#174358]/25 focus:bg-white transition-all" />
                 </div>
-              )}
+              </div>
 
-              {destSearch.trim() && !config.hideDestSearch ? (
+              {destSearch.trim() ? (
                 <div>
                   {filteredDests.length > 0 ? (
                     <div className="flex flex-wrap gap-3">
@@ -163,8 +145,7 @@ export default function Navbar({ forceLight = false }) {
                 </div>
               ) : (
                 <div>
-                  {/* Recently Searched - hidden for US/UK */}
-                  {!config.hideDestSearch && recentDests.length > 0 && (
+                  {recentDests.length > 0 && (
                     <div className="mb-8">
                       <p className="text-[#0D1B2A]/40 text-xs uppercase tracking-[0.15em] font-bold mb-4">Recently Searched</p>
                       <div className="flex flex-wrap gap-2.5">
@@ -177,36 +158,22 @@ export default function Navbar({ forceLight = false }) {
                       </div>
                     </div>
                   )}
-                  {config.hideDestSearch ? (
-                    <div>
-                      <p className="text-[#0D1B2A]/40 text-xs uppercase tracking-[0.15em] font-bold mb-4">Our Destinations</p>
-                      <div className="flex flex-wrap gap-3">
-                        {allDests.map((d) => (
-                          <Link key={d.name} to={`/destination/${d.name}`} onClick={() => trackDest(d.name)}
-                            className="px-6 py-3 rounded-full text-sm font-semibold text-[#0D1B2A]/70 border border-[#0D1B2A]/10 hover:bg-[#174358] hover:text-white hover:border-[#174358] transition-all duration-200">{d.name}</Link>
-                        ))}
-                      </div>
+                  <div>
+                    <p className="text-[#0D1B2A]/40 text-xs uppercase tracking-[0.15em] font-bold mb-4">Our Destinations</p>
+                    <div className="flex flex-wrap gap-3">
+                      {FOCUS_DESTINATIONS.map((d) => (
+                        <Link key={d.name} to={`/destination/${d.name}`} onClick={() => trackDest(d.name)}
+                          className="px-6 py-3 rounded-full text-sm font-semibold text-[#0D1B2A]/70 border border-[#0D1B2A]/10 hover:bg-[#174358] hover:text-white hover:border-[#174358] transition-all duration-200">{d.name}</Link>
+                      ))}
                     </div>
-                  ) : (
-                    <div>
-                      <p className="text-[#0D1B2A]/40 text-xs uppercase tracking-[0.15em] font-bold mb-4">Featured</p>
-                      <div className="flex flex-wrap gap-3">
-                        <Link to="/destination/Europe" onClick={() => trackDest("Europe")}
-                          className="px-6 py-3 rounded-full text-sm font-bold text-white bg-[#174358] border border-[#174358] hover:bg-[#1e5a75] transition-all duration-200">Europe &middot; 20+ Countries</Link>
-                        {trendingDests.map((d) => (
-                          <Link key={d.name} to={`/destination/${d.name}`} onClick={() => trackDest(d.name)}
-                            className="px-6 py-3 rounded-full text-sm font-semibold text-[#0D1B2A]/70 border border-[#0D1B2A]/10 hover:bg-[#174358] hover:text-white hover:border-[#174358] transition-all duration-200">{d.name}</Link>
-                        ))}
-                      </div>
-                    </div>
-                  )}
+                  </div>
                 </div>
               )}
 
               <div className="mt-8 pt-7 border-t border-[#0D1B2A]/06">
                 <Link to="/#explore-destinations" onClick={(e) => goHash(e, "#explore-destinations")}
                   className="inline-flex items-center gap-2.5 text-base font-bold text-[#174358] hover:text-[#0D1B2A] transition-colors group">
-                  <MapPin size={18} /> View All {allDests.length} Destinations <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
+                  <MapPin size={18} /> View All {FOCUS_DESTINATIONS.length} Destinations <ArrowRight size={16} className="group-hover:translate-x-1 transition-transform" />
                 </Link>
               </div>
             </div>
@@ -298,10 +265,10 @@ export default function Navbar({ forceLight = false }) {
                   <input type="text" placeholder="Search destinations..." value={destSearch} onChange={(e) => setDestSearch(e.target.value)}
                     className="w-full pl-10 pr-4 py-3 rounded-xl bg-[#F8FAFB] border border-[#0D1B2A]/08 text-sm text-[#0D1B2A] placeholder:text-[#0D1B2A]/30 focus:outline-none" />
                 </div>
-                {(destSearch.trim() ? filteredDests : trendingDests).map((d) => (
+                {(destSearch.trim() ? filteredDests : FOCUS_DESTINATIONS).map((d) => (
                   <Link key={d.name} to={`/destination/${d.name}`} onClick={() => trackDest(d.name)} className="flex items-center gap-2.5 text-[15px] text-[#0D1B2A]/60 py-2 hover:text-[#174358]"><MapPin size={15} /> {d.name}</Link>
                 ))}
-                <Link to="/#explore-destinations" onClick={(e) => goHash(e, "#explore-destinations")} className="flex items-center gap-2.5 text-[15px] font-bold text-[#174358] py-2"><ArrowRight size={15} /> View All {allDests.length}</Link>
+                <Link to="/#explore-destinations" onClick={(e) => goHash(e, "#explore-destinations")} className="flex items-center gap-2.5 text-[15px] font-bold text-[#174358] py-2"><ArrowRight size={15} /> View All {FOCUS_DESTINATIONS.length}</Link>
               </div>
             )}
 

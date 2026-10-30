@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { UserPlus, Eye, EyeOff } from "lucide-react";
 import axios from "axios";
+import Navbar from "./Navbar";
 
 const API = process.env.REACT_APP_BACKEND_URL;
 
@@ -33,12 +34,11 @@ export default function AgentRegister() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFB] flex items-center justify-center px-4 py-12" data-testid="agent-register-page">
+    <div className="min-h-screen bg-[#F8FAFB]" data-testid="agent-register-page">
+      <Navbar forceLight />
+      <div className="flex items-center justify-center px-4 py-16 md:py-20">
       <div className="w-full max-w-md">
         <div data-reveal className="text-center mb-8">
-          <Link to="/" className="inline-block mb-6">
-            <span className="font-['Manrope'] font-bold tracking-tight text-2xl font-bold text-[#174358]">Hi DMC</span>
-          </Link>
           <h1 className="font-['Manrope'] font-bold tracking-tight text-3xl text-[#0D1B2A]">Agent Registration</h1>
           <p className="text-sm text-[#0D1B2A]/50 mt-2">Create your account to access destination tools</p>
         </div>
@@ -101,6 +101,7 @@ export default function AgentRegister() {
             <Link to="/agent/login" className="text-[#174358] font-semibold hover:underline">Sign in</Link>
           </p>
         </form>
+      </div>
       </div>
     </div>
   );
